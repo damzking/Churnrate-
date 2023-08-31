@@ -252,4 +252,33 @@ classification_report(y_val, best_val_knn)
 classification_report(y_train, best_train_knn)
 
 
+#Hypothesis Tests Two sample tests 
+#Account-lengths-in-months and demographics [senior and under_30]
+
+#Do Under 30 make more calls than seniors?
+#null hypothesis :The mean account length in months is the same for both groups 
+#alternative hypothesis: The mean account length is greater for under 30 compared to seniors
+#pvalue= 0.4641709 > 0.05 : This shows we fail to reject the null hypothesis
+twos_sample_bar = df2.groupby('demographics')['Account Length (in months)'].mean()
+print(twos_sample_bar)
+two_sample_std = df2.groupby('demographics')['Account Length (in months)'].std()
+print(two_sample_std)
+two_sample_count = df2.groupby('demographics')['Account Length (in months)'].count()
+print(two_sample_count)
+s_under30 = 25.076154
+s_senior = 24.052099
+n_under30 = 1287
+n_senior = 1256
+numerator = 32.707848 - 32.620223
+alpha = 0.05
+print(numerator)
+denominator = np.sqrt(s_under30 **2/n_under30 + s_senior **2/n_senior)
+print(denominator)
+t_stat = numerator /denominator
+print(t_stat)
+degrees_of_freedom = n_under30 + n_senior - 2
+from scipy.stats import t 
+p_values = 1-t.cdf(t_stat,df=degrees_of_freedom)
+print(p_values)
+
 
